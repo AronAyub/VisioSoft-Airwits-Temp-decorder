@@ -38,13 +38,13 @@ function Decoder(request) {
         var payload = request["GET"];
         var device = payload.id[0];
         var data = hexToBytes(payload.data[0]);
+     
+        var temp1 = ((data[0] << 8 | data[1]) - 10000) / 100;
+        var temp2 = ((data[2] << 8 | data[3]) - 10000) / 100;
+        var temp3 = ((data[4] << 8 | data[5]) - 10000) / 100;
+        var temp4 = ((data[6] << 8 | data[7]) - 10000) / 100;
+        var voltage = data[9] / 100;
 
-        var temperature = (data[0] << 8 | data[1]) / 10.0;
-        var temp1;
-        var temp2;
-        var temp3;
-        var temp4;
-        var voltage;
 
 
         var battery = data[2] / 10.0;
