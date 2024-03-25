@@ -10,4 +10,4 @@
 <img width="498" alt="image" src="https://github.com/AronAyub/LORAWAN-GPS_Tracker_Project/assets/55284959/371a8b2c-1c0b-4d3f-ae03-b589dc948889">
 
 
-<--> The added nodeJs code is applicable for NodeRed
+<--> The added nodeJs code is applicable for DataCake
