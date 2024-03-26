@@ -1,3 +1,5 @@
+//@AronAyub 2024
+
 function hexToBytes(hex) {
     for (var bytes = [], c = 0; c < hex.length; c += 2)
         bytes.push(parseInt(hex.substr(c, 2), 16));
@@ -14,7 +16,9 @@ function Decoder(request) {
             {
                 device: payload.device,
                 field: "LOCATION",
-                value: "(" + payload.cloc.lat + "," + payload.cloc.lng + ")"
+                //value: "(" + payload.cloc.lat + "," + payload.cloc.lng + ")"
+                value: "-1.3302908,36.8638554"
+                //value: payload.location
             },
             {
                 device: payload.device,
@@ -38,48 +42,21 @@ function Decoder(request) {
         var payload = request["GET"];
         var device = payload.id[0];
         var data = hexToBytes(payload.data[0]);
-        
-        //30-76 -> 0-1
-        //30-76 ->2-3
-        //30-70 -> 4-5
-        //30-70 -> 6-7
-        //0c-94 -> 8-9 
-     
-        var temp1 = ((data[0] << 8 | data[1]) - 10000) / 100;
-        var temp2 = ((data[2] << 8 | data[3]) - 10000) / 100;
-        var temp3 = ((data[4] << 8 | data[5]) - 10000) / 100;
-        var temp4 = ((data[6] << 8 | data[7]) - 10000) / 100;
-        var voltage = (data[8] << 8 | data[9])/100;
-       
-        
-        
+
+        var temperature = ((data[0] << 8 | data[1]) / 10) - 40;
+        var humidity = data[2] / 1.0;
+
         return [
             {
                 device: device,
-                field: "temp1",
-                value: temp1
+                field: "TEMPERATURE",
+                value: temperature
             },
             {
                 device: device,
-                field: "temp2",
-                value: temp2
-            },
-            {
-                device: device,
-                field: "temp3",
-                value: temp3
-            },
-            {
-                device: device,
-                field: "temp4",
-                value: temp4
-            },
-            {
-                device: device,
-                field: "voltage",
-                value: voltage
+                field: "HUMIDITY",
+                value: humidity
             }
-
         ];
     }
 }
